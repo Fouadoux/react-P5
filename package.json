@@ -1,6 +1,10 @@
 {
   "name": "fisheye",
   "version": "0.1.0",
+  "type": "module",
+  "prisma": {
+    "seed": "tsx prisma/seed.js"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,6 +13,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@prisma/client": "^6.19.2",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
@@ -17,6 +22,8 @@
     "@tailwindcss/postcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
-    "tailwindcss": "^4"
+    "prisma": "^6.19.2",
+    "tailwindcss": "^4",
+    "tsx": "^4.21.0"
   }
 }
