@@ -2,14 +2,14 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "sqlite"
-  url = "file:dev.db"
-}
+  url      = "file:C:/Users/fouad/Documents/openclassroom/React_2025/react-p5/fisheye/prisma/dev.db"
+  }
 
 model Photographer {
 	id	Int	@id @default(autoincrement())

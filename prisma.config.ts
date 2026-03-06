@@ -9,6 +9,6 @@ export default defineConfig({
     seed: 'tsx ./prisma/seed.js',
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    url: "file:C:/Users/fouad/Documents/openclassroom/React_2025/react-p5/fisheye/prisma/dev.db",
   },
 });

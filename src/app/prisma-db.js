@@ -1,5 +1,4 @@
-const { PrismaClient } = require('../generated/prisma/client');
-
+import { PrismaClient } from '../generated/prisma/client';
 const prisma = new PrismaClient();
 
 export const getAllPhotographers = () => prisma.photographer.findMany();
