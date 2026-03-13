@@ -1,4 +1,4 @@
-import { PrismaClient } from '../../src/generated/prisma/client.js';
+import { PrismaClient } from '../src/generated/prisma/client.js';
 import photographers from '../src/data/photographer.json' with { type: 'json' };
 import medias from '../src/data/media.json' with { type: 'json' };
 

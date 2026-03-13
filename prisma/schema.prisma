@@ -8,7 +8,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:C:/Users/fouad/Documents/openclassroom/React_2025/react-p5/fisheye/prisma/dev.db"
+  url      = env("DATABASE_URL")
   }
 
 model Photographer {
