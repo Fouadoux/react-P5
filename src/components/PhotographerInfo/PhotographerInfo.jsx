@@ -32,7 +32,7 @@ export default function PhotographerInfo({ photographer }) {
 
             <div className="w-50 h-50 rounded-full overflow-hidden mb-4 border-2 border-transparent group-hover:border-[#911C1C] transition-all duration-300">
                 <Image
-                    src={`/image/${portrait}`}
+                    src={`/images/${portrait}`}
                     alt={`Portrait de ${name}`}
                     width={200}
                     height={200}

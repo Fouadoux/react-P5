@@ -1,4 +1,3 @@
-import Header from "@/components/Header-index/HeaderIndex";
 import { getAllPhotographers } from "./prisma-db";
 import PhotographerCard from "@/components/PhotographerCard/PhotographerCard";
 import HeaderIndex from "@/components/Header-index/HeaderIndex";

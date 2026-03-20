@@ -4,7 +4,7 @@ export default function PhotographerContact({ isOpen, onClose, photographerName 
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-[#DB8876] rounded-[5px] w-[500px] p-10 relative">
+      <div className="bg-[#DB8876] rounded-[5px] w-[669px] p-10 relative">
 
         {/* Titre */}
         <h2 className="text-[40px] font-normal leading-tight mb-8">
