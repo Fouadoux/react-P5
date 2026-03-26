@@ -3,46 +3,90 @@ import Image from "next/image";
 import { useState } from "react";
 import { likeMedia } from "@/app/actions.jsx";
 
-
-
-export default function PhotographerMedia({ media, onLike }) {
+export default function PhotographerMedia({ media, onLike, index, onOpenLightBox }) {
     const { id, title, likes, image, video } = media;
     const [countLike, setCountlike] = useState(media.likes);
+    const [isLiked, setIsLiked] = useState(() => {
+        if (typeof window === "undefined") return false;
+        const liked = JSON.parse(localStorage.getItem("likedMedias") || "[]");
+        return liked.includes(media.id);
+    });
 
-    const handleLike= () => {
-        setCountlike(countLike=> countLike+1);
-        likeMedia(media.id, countLike+1);
-        onLike();
-    }
-    
+    const handleLike = () => {
+        const liked = JSON.parse(localStorage.getItem("likedMedias") || "[]");
+        if (isLiked) {
+            const updated = liked.filter((id) => id !== media.id);
+            localStorage.setItem("likedMedias", JSON.stringify(updated));
+            setCountlike(count => count - 1);
+            likeMedia(media.id, -1);
+            onLike(-1);
+        } else {
+            localStorage.setItem("likedMedias", JSON.stringify([...liked, media.id]));
+            setCountlike(count => count + 1);
+            likeMedia(media.id, 1);
+            onLike(1);
+        }
+        setIsLiked(prev => !prev);
+    };
 
     return (
+        <article className="flex flex-col gap-2 w-87.5 h-87.75">
 
-        <article className="flex flex-col gap-2">
+            {/* Media cliquable au clavier */}
             {video ? (
-                <video src={`/images/${video}`} className="w-full aspect-square object-cover rounded-lg" />
+                <video
+                    src={`/images/${video}`}
+                    aria-label={`Ouvrir la vidéo ${title}`}
+                    tabIndex={0}
+                    className="w-87.5 h-75 aspect-square object-cover rounded-lg cursor-pointer"
+                    onClick={() => onOpenLightBox(index)}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") onOpenLightBox(index);
+                    }}
+                />
             ) : (
-                <div className="relative w-full aspect-square">
+                <div
+                    role="button"
+                    aria-label={`Ouvrir la photo ${title}`}
+                    tabIndex={0}
+                    className="relative w-87.5 h-75 aspect-square cursor-pointer"
+                    onClick={() => onOpenLightBox(index)}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") onOpenLightBox(index);
+                    }}
+                >
                     <Image
                         src={`/images/${image}`}
                         alt={title}
                         fill
                         className="object-cover rounded-lg"
+                        loading="eager"
                     />
                 </div>
             )}
+
             <div className="flex justify-between">
                 <span className="text-red-700">{title}</span>
                 <div className="flex items-center gap-1">
-                    <span className="text-red-700">{countLike}</span>
-                    <button onClick={handleLike}>
-                        <Image src="/icons/favorite-24px 1.png" alt="likes" width={24} height={24} />
-                        
+                    <span className="text-red-700" aria-label={`${countLike} likes`}>
+                        {countLike}
+                    </span>
+                    <button
+                        onClick={handleLike}
+                        aria-label={isLiked ? `Ne plus aimer ${title}` : `Aimer ${title}`}
+                        aria-pressed={isLiked}
+                    >
+                        <Image
+                            src="/icons/favorite-24px 1.png"
+                            alt=""
+                            aria-hidden="true"
+                            width={24}
+                            height={24}
+                        />
                     </button>
-
                 </div>
             </div>
-        </article>
-    )
 
+        </article>
+    );
 }

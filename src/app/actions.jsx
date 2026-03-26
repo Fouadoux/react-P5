@@ -1,6 +1,10 @@
 "use server"
-import { updateNumberOfLikes } from "./prisma-db";
+import { incrementLikes, decrementLikes } from "./prisma-db";
 
-export async function likeMedia(mediaId, newLikes) {
-    await updateNumberOfLikes(mediaId, newLikes);
+export async function likeMedia(mediaId, delta) {
+    if (delta === 1) {
+        await incrementLikes(mediaId);
+    } else {
+        await decrementLikes(mediaId);
+    }
 }

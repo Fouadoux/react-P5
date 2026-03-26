@@ -1,21 +1,20 @@
-import { getPhotographer } from "@/app/prisma-db";
-import HeaderPhoto from "@/components/HeaderPhoto/HeaderPhoto";
-import PhotographerInfo from "@/components/PhotographerInfo/PhotographerInfo";
-import PhotographerMediaList from "@/components/PhotographerMediaList/PhotographerMediaList";
+import { getPhotographer, getAllMediasForPhotographer } from "@/app/prisma-db";
+import PhotographerPageClient from "@/components/PhotographerPageClient/PhotographerPageClient";
 
 
-export default async function PhotographerPage({params}){
 
+export default async function PhotographerPage({ params }) {
     const { id } = await params;
+    const numericId = Number(id);
 
-    const photographer = await getPhotographer(Number(id));
+    if (isNaN(numericId)) return null;
 
-    return(
+    const photographer = await getPhotographer(numericId);
+    const medias = await getAllMediasForPhotographer(numericId);
+
+    return (
         <>
-        <HeaderPhoto />
-        <PhotographerInfo photographer={photographer} />
-        <PhotographerMediaList id={photographer.id} price={photographer.price} />
+            <PhotographerPageClient photographer={photographer} medias={medias} />
         </>
-    )
-
+    );
 }

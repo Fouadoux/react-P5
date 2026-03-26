@@ -9,7 +9,7 @@ export default function PhotographerInfo({ photographer }) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <section className="flex flex-row w-310 h-78.25 bg-[#FAFAFA] justify-between px-[50px] items-center mx-auto">
+        <section className="flex flex-row w-310 h-78.25 bg-[#FAFAFA] justify-between px-12.5 items-center mx-auto">
             <div className="w-50 h-50">
                 <article className="">
                     <h2 className="text-[#D3573C] text-[64px] font-normal mb-1 whitespace-nowrap ">{name}</h2>
