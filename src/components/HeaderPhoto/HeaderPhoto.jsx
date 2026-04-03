@@ -3,8 +3,7 @@ import Link from "next/link";
 
 export default function HeaderPhoto() {
     return (
-        <div className="w-310 mx-auto flex items-center h-30  gap-3 ">
-            <header >
+            <header className="w-310 mx-auto flex items-center h-30  gap-3 " >
                     {/* Logo */}
                     <Link href="/">
                         <Image
@@ -16,6 +15,5 @@ export default function HeaderPhoto() {
                         />
                     </Link>
             </header >
-        </div >
     )
 }
