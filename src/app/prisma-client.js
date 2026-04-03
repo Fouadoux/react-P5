@@ -1,4 +1,4 @@
-import { createClient } from '@libsql/client';
+import {createClient} from '@libsql/client';
 
 const client = createClient({
     url: "libsql://fisheye-fouadoux.aws-eu-west-1.turso.io",
@@ -7,7 +7,7 @@ const client = createClient({
 
 export const getAllPhotographers = async () => {
     const result = await client.execute("SELECT * FROM Photographer");
-    return result.rows.map(row => ({ ...row }));
+    return result.rows.map(row => ({...row}));
 };
 
 export const getPhotographer = async (id) => {
@@ -15,7 +15,7 @@ export const getPhotographer = async (id) => {
         sql: "SELECT * FROM Photographer WHERE id = ?",
         args: [id],
     });
-    return result.rows[0] ? { ...result.rows[0] } : null;
+    return result.rows[0] ? {...result.rows[0]} : null;
 };
 
 export const getAllMediasForPhotographer = async (photographerId) => {
@@ -23,7 +23,7 @@ export const getAllMediasForPhotographer = async (photographerId) => {
         sql: "SELECT * FROM Media WHERE photographerId = ?",
         args: [photographerId],
     });
-    return result.rows.map(row => ({ ...row }));
+    return result.rows.map(row => ({...row}));
 };
 
 export const incrementLikes = async (mediaId) => {
