@@ -1,16 +1,19 @@
 "use client"
 import Image from "next/image";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { likeMedia } from "@/app/actions.jsx";
 
 export default function PhotographerMedia({ media, onLike, index, onOpenLightBox }) {
     const { id, title, likes, image, video } = media;
     const [countLike, setCountlike] = useState(media.likes);
-    const [isLiked, setIsLiked] = useState(() => {
-        if (typeof window === "undefined") return false;
+    const [isLiked, setIsLiked] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
         const liked = JSON.parse(localStorage.getItem("likedMedias") || "[]");
-        return liked.includes(media.id);
-    });
+        setIsLiked(liked.includes(media.id));
+        setMounted(true);
+    }, []);
 
     const handleLike = () => {
         const liked = JSON.parse(localStorage.getItem("likedMedias") || "[]");
@@ -59,6 +62,7 @@ export default function PhotographerMedia({ media, onLike, index, onOpenLightBox
                         src={`/images/${image}`}
                         alt={title}
                         fill
+                        sizes="350px"
                         className="object-cover rounded-lg"
                         loading="eager"
                     />
@@ -73,12 +77,13 @@ export default function PhotographerMedia({ media, onLike, index, onOpenLightBox
                     </span>
                     <button
                         onClick={handleLike}
-                        aria-label={isLiked ? `Ne plus aimer ${title}` : `Aimer ${title}`}
-                        aria-pressed={isLiked}
+                        aria-label={mounted ? (isLiked ? `Ne plus aimer ${title}` : `Aimer ${title}`) : `Aimer ${title}`}
+                        aria-pressed={mounted ? isLiked : false}
+                        suppressHydrationWarning
                     >
                         <Image
                             src="/icons/favorite-24px 1.png"
-                            alt=""
+                            alt="likes"
                             aria-hidden="true"
                             width={24}
                             height={24}

@@ -13,7 +13,7 @@ export default function PhotographerCard({ photographer }) {
 
         <div className="w-50 h-50 rounded-full overflow-hidden mb-4 border-2 border-transparent group-hover:border-[#911C1C] transition-all duration-300">
           <Image
-            src={`/image/${portrait}`}
+            src={`/images/${portrait}`}
             alt=""
             aria-hidden="true"
             width={200}

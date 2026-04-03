@@ -13,9 +13,14 @@ export default function PhotographerMediaListClient({ medias, price, onOpenLight
 
     return (
         <>
-            <section className={`grid grid-cols-3 gap-6 p-8 ${marge === 0 ? "" : "mb-15"}`}>
-                {medias.map((media, index ) => (
-                    <PhotographerMedia key={media.id} media={media} index={index} onLike={(delta) => setTotalLikes(t => t + delta)}  onOpenLightBox={onOpenLightBox}/>
+                <section className={`grid grid-cols-3 gap-x-24 gap-y-2 pt-8 w-310 mx-auto ${marge === 0 ? "mb-15" : ""}`}>
+                    {medias.map((media, index ) => (
+                    <PhotographerMedia
+                        key={media.id}
+                        media={media}
+                        index={index}
+                        onLike={(delta) => setTotalLikes(t => t + delta)}
+                        onOpenLightBox={onOpenLightBox}/>
                 ))}
             </section>
             <PhotographerStats like={totalLikes} price={price} />

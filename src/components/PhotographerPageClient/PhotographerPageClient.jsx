@@ -35,7 +35,7 @@ export default function PhotographerPageClient({ photographer, medias }) {
             <PhotographerInfo photographer={photographer} />
             <Filter selectedFiltre={selectedFiltre} setSelectedFiltre={setSelectedFiltre} />
             <PhotographerMediaListClient medias={sortedMedias} price={photographer.price} onOpenLightBox={handleLightBox} />
-            <Lightbox medias={sortedMedias} selectedIndex={selectedMediaIndex} isOpen={isOpen} onClose={() => setIsOpen(false)} setSelectedMediaIndex={setSelectedMediaIndex}  />
+            <Lightbox medias={sortedMedias} selectedIndex={selectedMediaIndex} isOpen={isOpen} onClose={() => setIsOpen(false)} setSelectedMediaIndex={setSelectedMediaIndex}/>
         </>
     )
 

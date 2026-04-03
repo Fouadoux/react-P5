@@ -3,20 +3,18 @@ import Link from "next/link";
 
 export default function HeaderPhoto() {
     return (
-        <div className="w-full">
-            <header className="max-w-360 h-30 mx-auto ">
-                <div className="relative left-19.75 top-10.25">
+        <div className="w-310 mx-auto flex items-center h-30  gap-3 ">
+            <header >
                     {/* Logo */}
                     <Link href="/">
                         <Image
                             src="/icons/logo.png"
-                            alt="logo"
+                            alt="FishEye - Retour à l'accueil"
                             width={200}
                             height={50}
                             priority
                         />
                     </Link>
-                </div>
             </header >
         </div >
     )
