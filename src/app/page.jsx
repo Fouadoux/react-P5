@@ -1,4 +1,4 @@
-import { getAllPhotographers } from "./prisma-db";
+import { getAllPhotographers } from "./prisma-client.js";
 import PhotographerCard from "@/components/PhotographerCard/PhotographerCard";
 import HeaderIndex from "@/components/Header-index/HeaderIndex";
 

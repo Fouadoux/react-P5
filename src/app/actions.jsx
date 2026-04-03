@@ -1,5 +1,5 @@
 "use server"
-import { incrementLikes, decrementLikes } from "./prisma-db";
+import { incrementLikes, decrementLikes } from "./prisma-client.js";
 
 export async function likeMedia(mediaId, delta) {
     if (delta === 1) {

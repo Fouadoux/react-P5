@@ -1,4 +1,4 @@
-import { getPhotographer, getAllMediasForPhotographer } from "@/app/prisma-db";
+import { getPhotographer, getAllMediasForPhotographer } from "@/app/prisma-client.js";
 import PhotographerPageClient from "@/components/PhotographerPageClient/PhotographerPageClient";
 
 
