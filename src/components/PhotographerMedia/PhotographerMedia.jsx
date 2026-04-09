@@ -8,6 +8,7 @@ export default function PhotographerMedia({ media, onLike, index, onOpenLightBox
     const [countLike, setCountlike] = useState(media.likes);
     const [isLiked, setIsLiked] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const liked = JSON.parse(localStorage.getItem("likedMedias") || "[]");
@@ -35,44 +36,49 @@ export default function PhotographerMedia({ media, onLike, index, onOpenLightBox
     return (
         <article className="flex flex-col gap-2 w-87.5 h-87.75">
 
-            {/* Media cliquable au clavier */}
-            {video ? (
-                <video
-                    src={`/images/${video}`}
-                    aria-label={`Ouvrir la vidéo ${title}`}
-                    tabIndex={0}
-                    className="w-87.5 h-75 aspect-square object-cover rounded-lg cursor-pointer"
-                    onClick={() => onOpenLightBox(index)}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") onOpenLightBox(index);
-                    }}
-                />
-            ) : (
-                <div
-                    role="button"
-                    aria-label={`Ouvrir la photo ${title}`}
-                    tabIndex={0}
-                    className="relative w-87.5 h-75 aspect-square cursor-pointer"
-                    onClick={() => onOpenLightBox(index)}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") onOpenLightBox(index);
-                    }}
-                >
-                    <Image
-                        src={`/images/${image}`}
-                        alt={title}
-                        fill
-                        sizes="350px"
-                        className="object-cover rounded-lg"
-                        loading="eager"
+            <div className="relative w-87.5 h-75">
+                {/* Spinner */}
+                {isLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg z-10">
+                        <div className="w-10 h-10 border-4 border-[#901C1C] border-t-transparent rounded-full animate-spin" />
+                    </div>
+                )}
+
+                {video ? (
+                    <video
+                        src={`/images/${video}`}
+                        className="w-full h-full object-cover rounded-lg cursor-pointer"
+                        onClick={() => onOpenLightBox(index)}
+                        onLoadedData={() => setIsLoading(false)}
                     />
-                </div>
-            )}
+                ) : (
+                    <div
+                        role="button"
+                        aria-label={`Ouvrir la photo ${title}`}
+                        tabIndex={0}
+                        className="relative w-full h-full cursor-pointer"
+                        onClick={() => onOpenLightBox(index)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") onOpenLightBox(index);
+                        }}
+                    >
+                        <Image
+                            src={`/images/${image}`}
+                            alt={title}
+                            fill
+                            sizes="350px"
+                            className="object-cover rounded-lg"
+                            loading="eager"
+                            onLoad={() => setIsLoading(false)}
+                        />
+                    </div>
+                )}
+            </div>
 
             <div className="flex justify-between">
-                <span className="text-red-700">{title}</span>
+                <h2 className="text-red-700 text-[24px]">{title}</h2>
                 <div className="flex items-center gap-1">
-                    <span className="text-red-700" aria-label={`${countLike} likes`}>
+                    <span className="text-red-700 text-[24px]" aria-label={`${countLike} likes`}>
                         {countLike}
                     </span>
                     <button
@@ -82,7 +88,7 @@ export default function PhotographerMedia({ media, onLike, index, onOpenLightBox
                         suppressHydrationWarning
                     >
                         <Image
-                            src="/icons/favorite-24px 1.png"
+                            src={isLiked ? "/icons/favorite-24px 1.png" : "/icons/favorite-empty.png"}
                             alt="likes"
                             aria-hidden="true"
                             width={24}

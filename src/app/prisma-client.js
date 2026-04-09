@@ -6,24 +6,39 @@ const client = createClient({
 });
 
 export const getAllPhotographers = async () => {
-    const result = await client.execute("SELECT * FROM Photographer");
-    return result.rows.map(row => ({...row}));
+    try {
+        const result = await client.execute("SELECT * FROM Photographer");
+        return result.rows.map(row => ({ ...row }));
+    } catch (error) {
+        console.error("Erreur DB getAllPhotographers:", error);
+        throw new Error("Impossible de récupérer les photographes");
+    }
 };
 
 export const getPhotographer = async (id) => {
-    const result = await client.execute({
-        sql: "SELECT * FROM Photographer WHERE id = ?",
-        args: [id],
-    });
-    return result.rows[0] ? {...result.rows[0]} : null;
+    try {
+        const result = await client.execute({
+            sql: "SELECT * FROM Photographer WHERE id = ?",
+            args: [id],
+        });
+        return result.rows[0] ? { ...result.rows[0] } : null;
+    } catch (error) {
+        console.error("Erreur DB getPhotographer:", error);
+        throw new Error("Impossible de récupérer le photographe");
+    }
 };
 
 export const getAllMediasForPhotographer = async (photographerId) => {
-    const result = await client.execute({
-        sql: "SELECT * FROM Media WHERE photographerId = ?",
-        args: [photographerId],
-    });
-    return result.rows.map(row => ({...row}));
+    try {
+        const result = await client.execute({
+            sql: "SELECT * FROM Media WHERE photographerId = ?",
+            args: [photographerId],
+        });
+        return result.rows.map(row => ({ ...row }));
+    } catch (error) {
+        console.error("Erreur DB getAllMediasForPhotographer:", error);
+        throw new Error("Impossible de récupérer les médias");
+    }
 };
 
 export const incrementLikes = async (mediaId) => {
