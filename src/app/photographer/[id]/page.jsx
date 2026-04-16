@@ -5,6 +5,9 @@ import {notFound} from "next/navigation";
 export async function generateMetadata({params}){
     const {id} = await params;
     const photographer = await getPhotographer(id);
+    if (!photographer) {
+        return { title: "FishEye - Photographe introuvable" };
+    }
     return {
         title: `FishEye - ${photographer.name}`,
     };
