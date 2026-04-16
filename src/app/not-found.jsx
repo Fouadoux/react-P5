@@ -1,5 +1,9 @@
 import Link from "next/link";
 
+export const metadata = {
+    title: "FishEye - Page introuvable",
+};
+
 export default function NotFound() {
     return (
         <div className="flex flex-col items-center justify-center h-screen gap-4">
