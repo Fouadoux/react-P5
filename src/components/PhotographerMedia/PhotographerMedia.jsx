@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import {useEffect, useState} from "react";
-import { likeMedia } from "@/app/actions.jsx";
+import {likeMedia, unlikeMedia} from "@/app/actions.jsx";
 import Spinner from "@/components/Spinner/Spinner.jsx";
 
 export default function PhotographerMedia({ media, onLike, index, onOpenLightBox }) {
@@ -12,8 +12,6 @@ export default function PhotographerMedia({ media, onLike, index, onOpenLightBox
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const liked = JSON.parse(localStorage.getItem("likedMedias") || "[]");
-        setIsLiked(liked.includes(media.id));
         setMounted(true);
     }, []);
 
