@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import Spinner from "@/components/Spinner/Spinner.jsx";
 
 export default function PhotographerCard({ photographer }) {
   const { id, name, city, country, tagline, price, portrait } = photographer;
@@ -15,11 +16,7 @@ export default function PhotographerCard({ photographer }) {
         <article className="flex flex-col items-center text-center w-55 cursor-pointer group">
 
           <div className="relative w-50 h-50 aspect-square rounded-full overflow-hidden mb-4 border-2 border-transparent group-hover:border-[#911C1C] transition-all duration-300">
-            {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10">
-                  <div className="w-10 h-10 border-4 border-[#901C1C] border-t-transparent rounded-full animate-spin" />
-                </div>
-            )}
+            {isLoading &&<Spinner />}
             <Image
                 src={`/images/${portrait}`}
                 alt={`Portrait de ${name}`}

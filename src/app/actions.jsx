@@ -1,10 +1,12 @@
 "use server"
-import {incrementLikes, decrementLikes} from "./prisma-client.js";
+import { incrementLikes, decrementLikes } from "./prisma-client.js";
 
-export async function likeMedia(mediaId, delta) {
-    if (delta === 1) {
-        await incrementLikes(mediaId);
-    } else {
-        await decrementLikes(mediaId);
-    }
+export async function likeMedia(mediaId) {
+    if (isNaN(mediaId) || mediaId <= 0) throw new Error("Invalid media ID");
+    await incrementLikes(mediaId);
+}
+
+export async function unlikeMedia(mediaId) {
+    if (isNaN(mediaId) || mediaId <= 0) throw new Error("Invalid media ID");
+    await decrementLikes(mediaId);
 }

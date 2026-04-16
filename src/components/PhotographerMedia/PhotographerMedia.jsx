@@ -2,10 +2,11 @@
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import { likeMedia } from "@/app/actions.jsx";
+import Spinner from "@/components/Spinner/Spinner.jsx";
 
 export default function PhotographerMedia({ media, onLike, index, onOpenLightBox }) {
-    const { id, title, likes, image, video } = media;
-    const [countLike, setCountlike] = useState(media.likes);
+    const { title, image, video } = media;
+    const [countLike, setCountLike] = useState(media.likes);
     const [isLiked, setIsLiked] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -16,21 +17,25 @@ export default function PhotographerMedia({ media, onLike, index, onOpenLightBox
         setMounted(true);
     }, []);
 
-    const handleLike = () => {
-        const liked = JSON.parse(localStorage.getItem("likedMedias") || "[]");
-        if (isLiked) {
-            const updated = liked.filter((id) => id !== media.id);
-            localStorage.setItem("likedMedias", JSON.stringify(updated));
-            setCountlike(count => count - 1);
-            likeMedia(media.id, -1);
-            onLike(-1);
-        } else {
-            localStorage.setItem("likedMedias", JSON.stringify([...liked, media.id]));
-            setCountlike(count => count + 1);
-            likeMedia(media.id, 1);
-            onLike(1);
+    const handleLike = async () => {
+        try {
+            const liked = JSON.parse(localStorage.getItem("likedMedias") || "[]");
+            if (isLiked) {
+                const updated = liked.filter((id) => id !== media.id);
+                localStorage.setItem("likedMedias", JSON.stringify(updated));
+                setCountLike(count => count - 1);
+                await unlikeMedia(media.id);
+                onLike(-1);
+            } else {
+                localStorage.setItem("likedMedias", JSON.stringify([...liked, media.id]));
+                setCountLike(count => count + 1);
+                await likeMedia(media.id);
+                onLike(1);
+            }
+            setIsLiked(prev => !prev);
+        } catch (error) {
+            console.error("Erreur like:", error);
         }
-        setIsLiked(prev => !prev);
     };
 
     return (
@@ -38,11 +43,7 @@ export default function PhotographerMedia({ media, onLike, index, onOpenLightBox
 
             <div className="relative w-87.5 h-75">
                 {/* Spinner */}
-                {isLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg z-10">
-                        <div className="w-10 h-10 border-4 border-[#901C1C] border-t-transparent rounded-full animate-spin" />
-                    </div>
-                )}
+                {isLoading && <Spinner />}
 
                 {video ? (
                     <video
