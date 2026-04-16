@@ -6,18 +6,16 @@ import PhotographerMediaListClient from "@/components/PhotographerMediaListClien
 import Filter from "@/components/Filter/Filter";
 import Lightbox from "../Lightbox/Lightbox";
 
-
 export default function PhotographerPageClient({ photographer, medias }) {
     const [selectedFiltre, setSelectedFiltre] = useState("popularity")
     const [isOpen, setIsOpen] = useState(false)
     const [selectedMediaIndex, setSelectedMediaIndex] = useState(0)
 
-    
+
     const handleLightBox = (index) => {
         setIsOpen(true);
         setSelectedMediaIndex(index);
     }
-    
 
     const sortedMedias = [...medias].sort((a, b) => {
         switch (selectedFiltre) {
@@ -27,7 +25,6 @@ export default function PhotographerPageClient({ photographer, medias }) {
             default: return 0;
         }
     });
-
 
     return (
         <>

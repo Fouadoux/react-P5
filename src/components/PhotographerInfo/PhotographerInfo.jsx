@@ -2,21 +2,21 @@
 import { useState } from "react";
 import PhotographerContact from "../PhotographerContact/PhotographerContact";
 import Image from "next/image";
+import Spinner from "../Spinner/Spinner.jsx";
 
 export default function PhotographerInfo({ photographer }) {
 
-    const { name, city, country, tagline, price, portrait } = photographer;
+    const { name, city, country, tagline, portrait } = photographer;
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     return (
         <section className="flex flex-row w-310 h-78.25 bg-[#FAFAFA] px-12.5 items-center mx-auto">
-
-            <article className="flex-1 mt-1">
-                <h2 className="text-[#D3573C] text-[62px] font-normal mb-1 leading-tight">{name}</h2>
+            <div className="flex-1 mt-1">
+                <h1 className="text-[#D3573C] text-[62px] font-normal mb-1 leading-tight">{name}</h1>
                 <p className="text-[#901C1C] text-[24px] mb-5">{city}, {country}</p>
                 <p className="text-[#525252] text-[18px] mb-2">{tagline}</p>
-            </article>
+            </div>
 
             <div className="flex-1 flex justify-center mt-9">
                 <button
@@ -35,11 +35,7 @@ export default function PhotographerInfo({ photographer }) {
 
             <div className="relative flex justify-end items-center flex-1">
                 <div className="relative w-50 h-50 rounded-full overflow-hidden border-2 border-transparent shrink-0">
-                    {isLoading && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-full z-10">
-                            <div className="w-10 h-10 border-4 border-[#901C1C] border-t-transparent rounded-full animate-spin" />
-                        </div>
-                    )}
+                    {isLoading && <Spinner />}
                     <Image
                         src={`/images/${portrait}`}
                         alt={`Portrait de ${name}`}

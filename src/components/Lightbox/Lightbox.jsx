@@ -1,6 +1,7 @@
 "use client"
 import Image from "next/image";
 import {useEffect, useRef, useState} from "react";
+import Spinner from "../Spinner/Spinner.jsx";
 
 export default function Lightbox({ medias, selectedIndex, isOpen, onClose, setSelectedMediaIndex }) {
 
@@ -116,11 +117,7 @@ export default function Lightbox({ medias, selectedIndex, isOpen, onClose, setSe
                         aria-atomic="true"
                     >
                         {/* Spinner */}
-                        {isLoading && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg z-10">
-                                <div className="w-10 h-10 border-4 border-[#901C1C] border-t-transparent rounded-full animate-spin" />
-                            </div>
-                        )}
+                        {isLoading && <Spinner />}
 
                         {isVideo ? (
                             <video
