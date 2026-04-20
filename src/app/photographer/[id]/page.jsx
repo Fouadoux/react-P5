@@ -21,7 +21,7 @@ export default async function PhotographerPage({params}) {
     const photographer = await getPhotographer(numericId);
     const medias = await getAllMediasForPhotographer(numericId);
 
-    if (!photographer) notFound();
+    if (!photographer) return notFound();
 
     return (
         <>
