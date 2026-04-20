@@ -3,10 +3,10 @@
 export default function Error({ error, reset }) {
     const isDbError = error.name === "DataBaseError";
     return (
-        <div className="flex flex-col items-center justify-center h-screen gap-4">
-            <h2 className="text-[#911C1C] text-[36px] font-bold">Une erreur est survenue</h2>
+        <main className="flex flex-col items-center justify-center h-screen gap-4">
+            <h1 className="text-[#911C1C] text-[36px] font-bold">Une erreur est survenue</h1>
             <p className="text-[#525252] text-[18px]">
-                {isDbError ? "Impossible de se connecter à la base de données." : "Réessayer plus tard !"}
+                {isDbError ? "Une erreur technique est survenue." : "Réessayer plus tard !"}
             </p>
             <button
                 onClick={reset}
@@ -14,6 +14,6 @@ export default function Error({ error, reset }) {
             >
                 Réessayer
             </button>
-        </div>
+        </main>
     );
 }
