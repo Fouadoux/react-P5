@@ -58,6 +58,11 @@ turso db tokens create fisheye
 TURSO_DATABASE_URL=libsql://your-database.turso.io
 TURSO_AUTH_TOKEN=your-auth-token
 ```
+**Option 3 — Avec Prisma (branch `prisma`)**
+La branch `prisma` utilise Prisma ORM avec SQLite en local :
+```env
+DATABASE_URL=file:./prisma/dev.db
+```
 
 ### Lancer le projet
 ```bash
