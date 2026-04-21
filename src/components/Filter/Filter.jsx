@@ -18,16 +18,16 @@ export default function Filter({ selectedFiltre, setSelectedFiltre }) {
     const currentLabel = options.find((o) => o.value === selectedFiltre)?.label;
 
     return (
-        <div className=" w-310 mx-auto flex items-center gap-3 mt-5">
+        <div className=" w-310 mx-auto flex items-center gap-3  z-50 ">
             <span id="filter-label" className="text-black font-bold">Trier par</span>
-            <div className="relative w-42.5">
+            <div className="relative w-42.5 z-50  ">
                 <button
                     onClick={() => setIsOpen(prev => !prev)}
                     aria-haspopup="listbox"
                     aria-expanded={isOpen}
                     aria-labelledby="filter-label"
                     aria-label={`Trier par ${currentLabel}`}
-                    className={`w-42.5 flex justify-between items-center gap-6 px-4 py-3 bg-[#901C1C] text-white font-bold ${
+                    className={`ml-4 mt-4 w-42.5 h-17.25 flex justify-between items-center gap-6 px-4 py-3 bg-[#901C1C] text-white text-[18px] font-bold ${
                         isOpen ? "rounded-t-lg" : "rounded-lg"
                     }`}
                 >
@@ -40,7 +40,7 @@ export default function Filter({ selectedFiltre, setSelectedFiltre }) {
                         role="listbox"
                         aria-label="Critère de tri"
                         aria-activedescendant={selectedFiltre}
-                        className="absolute w-full bg-[#901C1C] text-white z-10 rounded-b-lg"
+                        className="ml-4  absolute w-full bg-[#901C1C] text-white text-[18px] font-bold z-10 rounded-b-lg"
                     >
                         {options.filter((o) => o.value !== selectedFiltre).map(option => (
                             <li
@@ -54,8 +54,9 @@ export default function Filter({ selectedFiltre, setSelectedFiltre }) {
                                     if (e.key === "Enter" || e.key === " ") handleSelect(option.value);
                                     if (e.key === "Escape") setIsOpen(false);
                                 }}
-                                className="px-4 py-3 border-t border-white/20 hover:brightness-110 cursor-pointer"
+                                className="px-4 py-3 hover:brightness-110 cursor-pointer"
                             >
+                                <div className="border-t border-white mb-3" />
                                 {option.label}
                             </li>
                         ))}

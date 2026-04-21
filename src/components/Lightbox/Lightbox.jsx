@@ -1,18 +1,31 @@
 "use client"
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import {useEffect, useRef, useState} from "react";
+import Spinner from "../Spinner/Spinner.jsx";
 
 export default function Lightbox({ medias, selectedIndex, isOpen, onClose, setSelectedMediaIndex }) {
 
-    const media = medias[selectedIndex];
-    const isVideo = media.video !== null;
     const dialogRef = useRef(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    // Focus sur la dialog à l'ouverture
+    // Donne le focus à la dialog à l'ouverture pour activer la navigation clavier
     useEffect(() => {
         dialogRef.current?.focus();
     }, [isOpen]);
 
+    // Réinitialise le spinner à chaque changement de média
+    useEffect(() => {
+        setIsLoading(true);
+    }, [selectedIndex]);
+
+    // Tous les hooks doivent être appelés avant ce return (Rules of Hooks)
+    if (!isOpen) return null;
+
+    const media = medias[selectedIndex];
+    // Boolean() gère le cas où video est undefined (contrairement à !== null)
+    const isVideo = Boolean(media.video);
+
+    // Navigation circulaire : revient au début après le dernier média
     const handlePrev = () => {
         setSelectedMediaIndex((prev) => (prev - 1 + medias.length) % medias.length);
     };
@@ -20,7 +33,7 @@ export default function Lightbox({ medias, selectedIndex, isOpen, onClose, setSe
         setSelectedMediaIndex((prev) => (prev + 1) % medias.length);
     };
 
-    // Focus trap
+    // Gestion clavier : navigation + focus trap dans la modale
     const handleKeyDown = (e) => {
         if (e.key === "Escape") {
             onClose();
@@ -39,6 +52,7 @@ export default function Lightbox({ medias, selectedIndex, isOpen, onClose, setSe
 
         if (e.key !== "Tab") return;
 
+        // Focus trap : empêche le focus de sortir de la modale avec Tab/Shift+Tab
         const focusable = dialogRef.current?.querySelectorAll(
             'button, input, textarea, [tabindex]:not([tabindex="-1"])'
         );
@@ -59,8 +73,6 @@ export default function Lightbox({ medias, selectedIndex, isOpen, onClose, setSe
         }
     };
 
-    if (!isOpen) return null;
-
     return (
 
         <div
@@ -72,7 +84,7 @@ export default function Lightbox({ medias, selectedIndex, isOpen, onClose, setSe
             onKeyDown={handleKeyDown}
             tabIndex={-1}
         >
-            {/* Annonce pour lecteur d'écran */}
+            {/* Annonce le titre du média courant aux lecteurs d'écran */}
             <p className="sr-only" aria-live="assertive" aria-atomic="true">
                 {media.title}
             </p>
@@ -107,12 +119,15 @@ export default function Lightbox({ medias, selectedIndex, isOpen, onClose, setSe
                         aria-live="polite"
                         aria-atomic="true"
                     >
+                        {isLoading && <Spinner />}
+
                         {isVideo ? (
                             <video
                                 src={`/images/${media.video}`}
                                 controls
                                 aria-label={media.title}
                                 className="w-full h-full object-contain"
+                                onLoadedData={() => setIsLoading(false)}
                             />
                         ) : (
                             <Image
@@ -121,6 +136,7 @@ export default function Lightbox({ medias, selectedIndex, isOpen, onClose, setSe
                                 fill
                                 sizes="1050px"
                                 className="object-contain"
+                                onLoad={() => setIsLoading(false)}
                             />
                         )}
                     </div>
@@ -136,13 +152,13 @@ export default function Lightbox({ medias, selectedIndex, isOpen, onClose, setSe
 
                 </div>
 
-                {/* Titre */}
-                <p
+                {/* Titre — aria-hidden car déjà annoncé via aria-live ci-dessus */}
+                <h1
                     className="text-[#901C1C] font-bold text-xl py-4 w-262.5 max-w-full mx-auto"
                     aria-hidden="true"
                 >
                     {media.title}
-                </p>
+                </h1>
 
             </div>
         </div>
