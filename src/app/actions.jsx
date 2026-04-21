@@ -1,7 +1,7 @@
 "use server"
 // "use server" expose ces fonctions comme des Server Actions Next.js :
 // elles s'exécutent côté serveur mais peuvent être appelées depuis un composant client
-import { incrementLikes, decrementLikes } from "./prisma-client.js";
+import { incrementLikes, decrementLikes } from "./DB-client.js";
 
 export async function likeMedia(mediaId) {
     // Validation de l'ID avant toute opération en base
